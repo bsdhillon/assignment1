@@ -1,0 +1,93 @@
+import random
+import time
+
+def displayIntro():
+    print ('You are on a planet full of dragons. In front of you,')
+    print ('you see two caves. In one cave, the dragon is friendly')
+    print ('and will share his treasure with you. The other dragon')
+    print ('is greedy and hungry, and will eat you on sight.')
+    print
+    
+def chooseCave():
+    cave = ''
+    while cave != '1' and cave != '2':
+        print ('Which cave will you go into? (1 or 2)')
+        cave = raw_input()
+    return cave
+
+def checkCave(chosenCave):
+    print ('You approach the cave...')
+    time.sleep(2)
+    print ('It is dark and spooky...')
+    time.sleep(2)
+    print ('A large dragon jumps out in front of you! He opens his jaws and...')
+    print
+    time.sleep(2)
+    
+    
+    
+    if chosenCave == '1':
+        print ('You have selected cave ' + chosenCave)
+        print('Press 1 if u want to fight the dragon or Press 2 if u want to convince dragon')
+        fightSelection = raw_input()
+        checkSelection(fightSelection)
+        return fightSelection
+            
+    else:
+        print ('You have selected cave ' + chosenCave)
+        print('If u want to go left press 1 or press 2 to go right')
+        directionSelection = raw_input()
+        checkDirectionSelection(directionSelection)
+        return directionSelection
+def checkSelection(fightSelection):
+    friendlyFight = random.randint(1, 2)
+    if fightSelection == friendlyFight:
+        print ('Gives you his treasure!')
+    else:
+        print ('Gobbles you down in one bite!')
+def checkDirectionSelection(directionSelection):
+    if directionSelection == '1':
+        print('You are in luck cave. Press 1, 2 or 3 to test your luck. You might get killed based on your selection')
+        numberSelected = raw_input()
+        checkNumberSelected(numberSelected)
+        return numberSelected
+    
+    else:
+        print ('Gives you his treasure!')
+def checkNumberSelected(numberSelected):
+    tNumber = int(numberSelected)
+    action = ['killed Dragon', 'Killed you', 'Second life']
+    random.shuffle(action)
+    tempR = str(action[tNumber-1])
+    print(''+ tempR)
+    if tempR == 'Second life':
+        print('You get a second chance. you are returning to start point')
+        secondLife()
+    if tempR == 'Killed Dragon':
+        print('You have killed the dragon')
+        #time.sleep(2)
+        print('Now you are the king of the cave..')
+        
+    if tempR == 'Killed you':
+        print('Your luck betrayed you')
+        #time.sleep(1)
+        print('You have been killed by the dragon')
+        
+        
+def secondLife():    
+    chooseCave()
+    caveNumber = chooseCave()
+    checkCave(caveNumber)
+def main():
+    
+    playAgain = 'yes'
+    while playAgain == 'yes' or playAgain == 'y':
+        displayIntro()
+        caveNumber = chooseCave()
+        checkCave(caveNumber)
+        
+        print ('Do you want to play again? (yes or no)')
+        playAgain = raw_input()
+        
+if __name__ == "__main__": main() 
+
