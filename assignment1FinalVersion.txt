@@ -1,0 +1,154 @@
+#Filename: textgame.py
+#Author: Balwinder Dhillon
+#Date: May 23, 2013
+#Purpose: Text game that asks the user to select on of the caves. Based on the cave selection the user has to make 
+# decisions to what he wants to do next. He can fight or convince the dragon. He can try his luck by selecting a 
+# random number or answer a mind question.
+
+import random
+import time
+
+def displayIntro():
+    #content displayed when the game starts
+    print ('You are on a planet full of dragons. In front of you,')
+    print ('you see two caves. In one cave, the dragon is friendly')
+    print ('and will share his treasure with you. The other dragon')
+    print ('is greedy and hungry, and will eat you on sight.')
+    print
+# user selects the cave he wants to enter    
+def chooseCave():
+    cave = ''
+    while cave != '1' and cave != '2':
+        print ('Which cave will you go into? (1 or 2)')
+        cave = raw_input()
+    return cave
+
+def checkCave(chosenCave):
+    if chosenCave == '1':
+        print ('You have selected cave ' + chosenCave)
+        time.sleep(1)
+        print ('It is dark and spooky...')
+        time.sleep(1)
+        print
+        #user decides if he wants to fight with the dragon or convince him
+        fightSelection = ''
+        while fightSelection !='1' and fightSelection !='2':
+            print('Press 1 if u want to fight the dragon or Press 2 if u want to convince dragon')
+            fightSelection = raw_input()
+            checkSelection(fightSelection)
+        return fightSelection
+            
+    else:
+        print ('You have selected cave ' + chosenCave)
+        time.sleep(1)
+        print('You enter a dark room with two doors.')
+        time.sleep(1)
+        #user decides if he wants to go left or right after entering cave 2
+        directionSelection = ''
+        while directionSelection !='1' and directionSelection !='2':
+            print('If u want to go left press 1 or press 2 to go right')
+            directionSelection = raw_input()
+            checkDirectionSelection(directionSelection)
+        return directionSelection
+#function when user decides to fight with dragon or convinnce him    
+def checkSelection(fightSelection):
+    if fightSelection == '1':
+        #generating random number
+        friendlyFight = random.randint(1, 2)
+        if friendlyFight == '1':
+            print('You have killed the Dragon')
+        else:   
+            print ('Dragon has killed you.')
+            print('You need more power to kill the mighty dragon')
+    if fightSelection == '2':
+        friendlyConvince = random.randint(1, 2)
+        if friendlyConvince == '1':
+            print('You have convinced the Dragon to be your friend')
+            print('You have got the treasure ...!!')
+        else:
+            print('You could not convince the dragon')
+            print ('Gobbles you down in one bite!')
+    
+#function defining the direction selection and outcome of it in cave 2
+def checkDirectionSelection(directionSelection):
+    if directionSelection == '1':
+        print('You are in luck testing cave now.') 
+        time.sleep(1)
+        print('Press 1, 2 or 3 to test your luck. You might get killed based on your selection.')
+        numberSelected = raw_input()
+        checkNumberSelected(numberSelected)
+        return numberSelected
+    
+    elif directionSelection == '2':
+        print('How about playing some mind games?')
+        time.sleep(1)
+        print('Guess what the dragon is thinking now')
+        time.sleep(2)
+        print('1 Killing You')
+        print('2 Running Away')
+        print ('3 Giving you his treasure!')
+        print('4 Making you the owner of the cave')
+        print('Enter your choice') 
+        mindGameOption = raw_input()
+        checkMindGameOption(mindGameOption)
+        return mindGameOption
+    
+def checkNumberSelected(numberSelected):
+    tNumber = int(numberSelected)
+    action = ['Killed Dragon', 'Killed you', 'Second life']
+    random.shuffle(action)
+    tempR = str(action[tNumber-1])
+    #randomly comapring user selection to three possible outcomes of selection
+    print(''+ tempR)
+    # user gets a second chance to start from begining    
+    if tempR == 'Second life':
+        print('You get a second chance. ')
+        time.sleep(1)
+        print('You are returning to the start point.')
+        secondLife()
+        #user kills the dragon
+    elif tempR == 'Killed Dragon':
+        print('You have killed the dragon.')
+        time.sleep(1)
+        print('Now you are the king of the cave..')
+        #dragon kills the user    
+    elif tempR == 'Killed you':
+        print('Your luck betrayed you.')
+        time.sleep(1)
+        print('You have been killed by the dragon.')
+#Function using random number to comapre the input by user and generating result based on that        
+def checkMindGameOption(mindGameOption): 
+    choice = int(mindGameOption)
+    friendlyGuess = random.randint(1, 4)
+    if friendlyGuess == choice:
+        print('You Guessed it right.' )
+        print('You are the ultimate winner')
+        print
+        #giving user the right answer when he selects the wrong option 
+    else:
+        tempGuess = str(friendlyGuess)
+        print('The correct option is : ' + tempGuess)
+        time.sleep(1)
+        print('You have lost. Better Luck Next Time.' )
+        print
+#function for giving user the option to start over if he gets a second life in cave 2
+def secondLife():    
+    #chooseCave()
+    caveNumber = chooseCave()
+    checkCave(caveNumber)
+#main function for the game
+def main():
+    
+    playAgain = 'yes'
+    while playAgain == 'yes' or playAgain == 'y':
+        displayIntro()
+        caveNumber = chooseCave()
+        checkCave(caveNumber)
+        
+        print ('Do you want to play again? (yes or no)')
+        playAgain = raw_input()
+    if playAgain == 'no' or playAgain =='n':
+        print('Thanks for playing the dragon Game...!!!')
+       
+if __name__ == "__main__": main() 
+
